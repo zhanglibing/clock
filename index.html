@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+</head>
+<style>
+body{
+  margin:0;
+  padding: 0;
+  background:rgba(0,0,0,0.9);
+}
+    #canvas{
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+        background-image: url("images/biao2.jpg");
+        background-size:300px 300px;
+        border-radius: 50%;
+    }
+</style>
+<body>
+  <canvas width="300" height="300" id="canvas"></canvas>
+  <script>
+      var canvas=document.getElementById('canvas')
+      var cxt=canvas.getContext("2d");
+//      钟表
+      function clock(){
+          cxt.clearRect(0,0,300,300);
+          var date=new Date();
+          var s=date.getSeconds();
+          var m=date.getMinutes();
+          var h=date.getHours();
+
+          cxt.save();
+//          移动中心点
+          cxt.translate(150,150);
+          cxt.save();
+          for(var i=0;i<60;i++){
+
+              cxt.beginPath();
+              cxt.moveTo(0,-120);
+              if(i%5==0){
+                  cxt.lineTo(0,-110);
+              }else{
+                  cxt.lineTo(0,-115);
+              }
+              cxt.lineWidth="1"
+              cxt.strokeStyle="#fff"
+              cxt.stroke();
+              cxt.closePath();
+              cxt.rotate(Math.PI/30)
+
+          }
+          cxt.restore()
+
+          cxt.save();
+//          秒钟
+          cxt.rotate(2*Math.PI*s/60)
+          cxt.beginPath()
+          cxt.moveTo(0,30);
+          cxt.lineTo(0,7);
+          cxt.moveTo(7,0);
+          cxt.arc(0,0,7,0,2*Math.PI);
+          cxt.moveTo(0,7);
+          cxt.lineTo(0,-90);
+          cxt.strokeStyle="red"
+          cxt.closePath();
+          cxt.stroke();
+          cxt.restore();
+
+          cxt.save();
+//分钟
+          cxt.rotate(2*Math.PI*(60*m+s)/3600);
+          cxt.beginPath();
+          cxt.moveTo(0,25);
+          cxt.lineTo(0,7);
+          cxt.moveTo(7,0)
+          cxt.arc(0,0,7,0,2*Math.PI);
+          cxt.moveTo(0,7);
+          cxt.lineTo(0,-75)
+          cxt.strokeStyle="green";
+          cxt.closePath();
+          cxt.stroke();
+          cxt.restore();
+
+          cxt.save();
+          //时钟
+          cxt.rotate(Math.PI*(60*h+m)/360);
+          cxt.beginPath();
+          cxt.moveTo(0,20);
+          cxt.lineTo(0,7);
+          cxt.moveTo(7,0);
+          cxt.arc(0,0,7,0,2*Math.PI);
+          cxt.moveTo(0,7);
+          cxt.lineCap = "round";
+          cxt.lineWidth="1"
+          cxt.lineTo(0,-60);
+          cxt.strokeStyle="blue";
+
+          cxt.closePath();
+          cxt.stroke();
+          cxt.restore();
+          cxt.restore();
+      }
+      setInterval(clock,100)
+  </script>
+</body>
+</html>
